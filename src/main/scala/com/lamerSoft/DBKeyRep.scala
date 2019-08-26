@@ -1,6 +1,5 @@
 package com.lamerSoft
 
-import java.util.UUID
 
 import akka.actor.{Actor, ActorLogging, ActorRef, PoisonPill, Props}
 import com.datastax.oss.driver.api.core.CqlSession
@@ -27,7 +26,7 @@ class DBKeyRep(jsonParser: ActorRef) extends Actor with ActorLogging {
   private val session = CqlSession.builder.build
 
   override def receive: Receive = {
-    case Put(messageId: String, encryptedPan: String) => {
+    case Put(messageId: String, encryptedPan: String) =>
       val uuid = now()
       jsonParser ! JsonParser.TokenParseToJson(encryptedPan)
       val insert = insertInto("tokenizer", "somerepo")
@@ -37,7 +36,7 @@ class DBKeyRep(jsonParser: ActorRef) extends Actor with ActorLogging {
       val statement = insert.build
       session.execute(statement)
       session.close()
-    }
+
     case Get(token: String) =>
       val query = selectFrom("tokenizer", "somerepo")
         .column("messageId")
