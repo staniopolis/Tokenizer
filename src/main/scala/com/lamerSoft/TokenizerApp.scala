@@ -23,7 +23,6 @@ object TokenizerApp {
     val system = ActorSystem(s"$name-system")
     val tokenizerApp = new TokenizerApp(system)
     tokenizerApp.run()
-
   }
 
 
@@ -57,6 +56,9 @@ class TokenizerApp(system: ActorSystem) extends Terminal {
       case Command.Message(messageId, jsonValue) =>
         processPAN(messageId, jsonValue)
         commandLoop()
+      case Command.Status =>
+        status()
+        commandLoop()
       case Command.Quit =>
         system.terminate()
       case Command.Unknown(command) =>
@@ -76,5 +78,8 @@ class TokenizerApp(system: ActorSystem) extends Terminal {
   protected def processToken(json: JsValue): Unit = {
     tokenizer ! Tokenizer.ProcessToken(json)
   }
+
+  protected def status(): Unit =
+    ()
 }
 
