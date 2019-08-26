@@ -25,11 +25,7 @@ object TokenizerApp {
 
     val system = ActorSystem(s"$name-system")
     val tokenizerApp = new TokenizerApp(system)
-    //    StdIn.readLine()
-    //    system.terminate()
-    tokenizerApp.run()
-    //    Await.ready(system.whenTerminated, Duration.Inf)
-
+       tokenizerApp.run()
 
   }
 
@@ -43,16 +39,7 @@ object TokenizerApp {
 }
 
 class TokenizerApp(system: ActorSystem) extends Terminal {
-
-
-  //    private val uuid = randomUUID()
-  //  private val json: JsValue = Json.parse(
-  //    """
-  //  {
-  //    "pan" : "1234567890123456"
-  //     }
-  //  """)
-
+  
   private val log = Logging(system, getClass.getName)
   private val tokenizer = createTokenizer()
 
