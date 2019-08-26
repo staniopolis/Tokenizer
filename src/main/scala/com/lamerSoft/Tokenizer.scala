@@ -15,9 +15,11 @@ object Tokenizer {
 
 class Tokenizer extends Actor with ActorLogging {
 
+  println("Tokenizer actor started")
+
   import Tokenizer.{ProcessPan, ProcessToken}
 
-  println("new com.lamerSoft.Tokenizer created")
+
 
   protected val jsonParser: ActorRef = createJsonParser
 

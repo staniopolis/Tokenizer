@@ -1,7 +1,5 @@
 package com.common
 
-import java.util.UUID.randomUUID
-
 import play.api.libs.json.JsValue
 
 import scala.util.parsing.combinator.RegexParsers

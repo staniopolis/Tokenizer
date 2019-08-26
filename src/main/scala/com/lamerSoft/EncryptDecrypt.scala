@@ -1,10 +1,10 @@
 package com.lamerSoft
 
+import akka.actor.{Actor, ActorLogging, ActorRef, Props}
+
 import java.security.MessageDigest
 import java.util
-import java.util.UUID
 
-import akka.actor.{Actor, ActorLogging, ActorRef, Props}
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 import org.apache.commons.codec.binary.Base64
@@ -25,7 +25,7 @@ class EncryptDecrypt(jsonParser: ActorRef) extends Actor with ActorLogging {
 
   import EncryptDecrypt.{DecryptAndSendToPars, DecryptToken, EncryptPan}
 
-  println("new EncryptDecrypter created")
+  println("Encrypt/Decrypt actor started")
 
 
   def encrypt(key: String, value: String): String = {

@@ -5,7 +5,6 @@ import java.util.UUID
 import akka.actor.{Actor, ActorLogging, ActorRef, PoisonPill, Props}
 import com.datastax.oss.driver.api.core.CqlSession
 import com.datastax.oss.driver.api.querybuilder.QueryBuilder._
-import com.lamerSoft.EncryptDecrypt.DecryptAndSendToPars
 
 object DBKeyRep {
 
@@ -19,6 +18,8 @@ object DBKeyRep {
 
 
 class DBKeyRep(jsonParser: ActorRef) extends Actor with ActorLogging {
+
+  println("Database actor started")
 
   import DBKeyRep.{Get, Put}
   import com.lamerSoft.EncryptDecrypt.DecryptAndSendToPars

@@ -1,7 +1,5 @@
 package com.lamerSoft
 
-import java.util.UUID
-
 import akka.actor.{Actor, ActorLogging, ActorRef, Props}
 import play.api.libs.json._
 
@@ -21,18 +19,14 @@ object JsonParser {
 
 class JsonParser(tokenizer: ActorRef) extends Actor with ActorLogging {
 
+
+  println ("Jason parse actor started")
   import JsonParser.{PanParseToJson, ParsPan, ParsToken, TokenParseToJson}
-println ("new com.lamerSoft.JsonParser created")
-  val encryptDecrypt = createEncryptDecrypt()
+  private val encryptDecrypt = createEncryptDecrypt()
 
   def createEncryptDecrypt(): ActorRef = {
     context.actorOf(EncryptDecrypt.props(self))
   }
-
-
-
-
-
 
   override def receive: Receive = {
     case ParsPan(messageId: String, json: JsValue) =>

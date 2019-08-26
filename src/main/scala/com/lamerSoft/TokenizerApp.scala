@@ -1,12 +1,11 @@
 package com.lamerSoft
 
-import java.util.UUID
 
 import scala.collection._
 import akka.actor.{ActorRef, ActorSystem}
 import akka.event.Logging
 import com.common.Terminal
-import play.api.libs.json.{JsObject, JsValue}
+import play.api.libs.json.JsValue
 
 import scala.collection.breakOut
 import scala.annotation.tailrec
@@ -20,12 +19,10 @@ object TokenizerApp {
   def main(args: Array[String]): Unit = {
     val opts = argsToOpts(args.toList)
     applySystemProperties(opts)
-
     val name = opts.getOrElse("name", "tokenizer")
-
     val system = ActorSystem(s"$name-system")
     val tokenizerApp = new TokenizerApp(system)
-       tokenizerApp.run()
+    tokenizerApp.run()
 
   }
 
@@ -39,7 +36,9 @@ object TokenizerApp {
 }
 
 class TokenizerApp(system: ActorSystem) extends Terminal {
-  
+
+  println("Tokenizer system started")
+
   private val log = Logging(system, getClass.getName)
   private val tokenizer = createTokenizer()
 
@@ -58,9 +57,6 @@ class TokenizerApp(system: ActorSystem) extends Terminal {
       case Command.Message(messageId, jsonValue) =>
         processPAN(messageId, jsonValue)
         commandLoop()
-      case Command.Status =>
-        status()
-        commandLoop()
       case Command.Quit =>
         system.terminate()
       case Command.Unknown(command) =>
@@ -77,12 +73,8 @@ class TokenizerApp(system: ActorSystem) extends Terminal {
     tokenizer ! Tokenizer.ProcessPan(messageId, json)
   }
 
-  protected def processToken(messageId: String, json: JsValue): Unit = {
-    tokenizer ! Tokenizer.ProcessToken
+  protected def processToken(json: JsValue): Unit = {
+    tokenizer ! Tokenizer.ProcessToken(json)
   }
-
-  protected def status(): Unit =
-    ()
-
 }
 
