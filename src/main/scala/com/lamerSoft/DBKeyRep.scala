@@ -28,14 +28,15 @@ class DBKeyRep(jsonParser: ActorRef) extends Actor with ActorLogging {
   override def receive: Receive = {
     case Put(messageId: String, encryptedPan: String) =>
       val uuid = now()
-      jsonParser ! JsonParser.TokenParseToJson(encryptedPan)
-      val insert = insertInto("tokenizer", "somerepo")
+            val insert = insertInto("tokenizer", "somerepo")
         .value("id", uuid)
         .value("messageId", literal(messageId))
         .value("value", literal(encryptedPan))
       val statement = insert.build
       session.execute(statement)
       session.close()
+      println("Token put into database")
+      jsonParser ! JsonParser.TokenParseToJson(encryptedPan)
 
     case Get(token: String) =>
       val query = selectFrom("tokenizer", "somerepo")

@@ -29,9 +29,9 @@ class Tokenizer extends Actor with ActorLogging {
 
   override def receive: Receive = {
     case ProcessPan(messageId: String, json: JsValue) =>
-      createJsonParser ! JsonParser.ParsPan(messageId, json)
+      jsonParser ! JsonParser.ParsPan(messageId, json)
     case ProcessToken(json: JsValue) =>
-      createJsonParser ! JsonParser.ParsToken(json)
+      jsonParser ! JsonParser.ParsToken(json)
     case _ => println("lol")
   }
 }

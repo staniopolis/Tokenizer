@@ -39,7 +39,7 @@ class TokenizerApp(system: ActorSystem) extends Terminal {
   println("Tokenizer system started")
 
   private val log = Logging(system, getClass.getName)
-  private val tokenizer = createTokenizer()
+//  private val tokenizer = createTokenizer()
 
   def run(): Unit = {
     log.warning(f"{} running%nEnter "
@@ -71,12 +71,12 @@ class TokenizerApp(system: ActorSystem) extends Terminal {
     system.actorOf(Tokenizer.props, "tokenizer")
 
   protected def processPAN(messageId: String, json: JsValue): Unit = {
-    println(messageId, json, json.getClass.getName)
-    tokenizer ! Tokenizer.ProcessPan(messageId, json)
+    println(messageId, json)
+    createTokenizer() ! Tokenizer.ProcessPan(messageId, json)
   }
 
   protected def processToken(json: JsValue): Unit = {
-    tokenizer ! Tokenizer.ProcessToken(json)
+    createTokenizer() ! Tokenizer.ProcessToken(json)
   }
 
   protected def status(): Unit =

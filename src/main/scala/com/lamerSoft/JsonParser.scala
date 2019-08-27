@@ -38,6 +38,7 @@ class JsonParser(tokenizer: ActorRef) extends Actor with ActorLogging {
       val token = (json \ "token").as[String]
       encryptDecrypt ! EncryptDecrypt.DecryptToken(token)
     case TokenParseToJson(token: String) =>
+      println("token is parsing back to JSON")
       val json: JsValue = JsObject(Seq("token" -> JsString(token)))
       println(json) // Что-то чделать дальше
     case PanParseToJson(messageId: String, pan: String) =>
